@@ -13,7 +13,7 @@ public class USACO {
     if (scan.hasNextLine()) {
       firstLine = scan.nextLine();
     }
-    //makes an array of Strings; separates values based on spaces between
+    //makes an array of strings; separates values based on spaces between
     String[] numbersArray = firstLine.split(" ");
     //initialize vars
     int index = 0;
@@ -22,7 +22,7 @@ public class USACO {
     int num = 0;
     int elevation = 0;
 
-    //parses Ints from the array of Strings
+    //parses ints from the array of strings
     while (index != 4) {
       if (index == 0) row = Integer.parseInt(numbersArray[0]);
       if (index == 1) col = Integer.parseInt(numbersArray[1]);
@@ -82,7 +82,6 @@ public class USACO {
       }
     }
     ret = ret * 72 * 72;
-    System.out.println(ret);
     return ret;
 }
 
@@ -110,7 +109,7 @@ public class USACO {
       }
     }
 
-    //toString method 
+    //toString method
     public static String toString(int[][] Lake) {
       String ret = "";
       for (int x = 0; x < Lake.length; x++) {
@@ -125,12 +124,66 @@ public class USACO {
       return ret;
     }
 
-//  public static int silver(String filename) {  }
+  public static int silver(String filename) throws FileNotFoundException {
+      //reads & scan sin file
+      File fileIn = new File(filename);
+      Scanner scan = new Scanner(fileIn);
+
+      //reads in first line
+      String firstLine = "";
+      if (scan.hasNextLine()) {
+        firstLine = scan.nextLine();
+      }
+
+      //makes an array of Strings; seperates values based on spaces between
+      String[] numbersArray = firstLine.split(" ");
+      int row = 0;
+      int col = 0;
+      int time = 0;
+      int index = 0;
+
+      //parses ints from the array of strings
+      while (index != 3) {
+        if (index == 0) row = Integer.parseInt(numbersArray[0]);
+        if (index == 0) col = Integer.parseInt(numbersArray[1]);
+        if (index == 0) time = Integer.parseInt(numbersArray[2]);
+        index++;
+      }
+
+      //initializes the array of pasture
+      //reads in values from file and sets . to 0, * to 1
+      int[][] pasture = new int[row][col];
+      for (int r = 0; r < row; r++) {
+        String newLine = scan.nextLine();
+        for (int c = 0; c < col; c++) {
+          if (newLine.charAt(c) == '.') pasture[r][c] = 0;
+          if (newLine.charAt(c) == '*') pasture[r][c] = 1;
+        }
+      }
+
+      //reads in the coordinates
+      String lastLine = scan.nextLine();
+      String[] numbersArray2 = lastLine.split(" ");
+      int row1 = Integer.parseInt(numbersArray2[0]);
+      int col1 = Integer.parseInt(numbersArray2[1]);
+      int row2 = Integer.parseInt(numbersArray2[2]);
+      int col2 = Integer.parseInt(numbersArray2[3]);
+
+      System.out.println(row);
+      System.out.println(col);
+      System.out.println(time);
+      System.out.println(toString(pasture));
+      System.out.println(lastLine);
+      return 1;
+  }
 
 
 public static void main(String[] args) {
   try {
-      bronze("makelake.3.in");
+    //  System.out.println(bronze("makelake.1.in"));
+    //  System.out.println(bronze("makelake.2.in"));
+    //  System.out.println(bronze("makelake.3.in"));
+        silver("ctravel.1.in");
     }
   catch (FileNotFoundException e) {
 
