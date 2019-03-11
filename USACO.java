@@ -4,7 +4,7 @@ import java.io.*;
 public class USACO {
 
   public static int bronze(String filename) throws FileNotFoundException {
-
+    //reads & scans in file
     File fileIn = new File(filename);
     Scanner scan = new Scanner(fileIn);
 
@@ -33,7 +33,7 @@ public class USACO {
 
     //initializes array of Lake, reads in from file and adds value to array
     int[][] Lake = new int[row][col];
-    for (int x = 0; x < Lake.length; x++) {
+    for (int x = 0; x < row; x++) {
       String newLine = scan.nextLine();
       String[] parseLine = newLine.split(" ");
       for (int y = 0; y < parseLine.length; y++) {
@@ -41,6 +41,8 @@ public class USACO {
       }
     }
 
+    //reads in the directions
+    //creates an array of directions, based on the parameter num and 3
     int[][] directions = new int[num][3];
     int rowNum = 0;
     index = 0;
@@ -52,16 +54,63 @@ public class USACO {
       directions[rowNum][index] = Integer.parseInt(parseSteps[index]);
       index++;
       directions[rowNum][index] = Integer.parseInt(parseSteps[index]);
+      //resets index back to 0, row number goes up by 1, repeats
       index = 0;
       rowNum++;
     }
-    System.out.println(row + " " + col + " " + elevation + " " + num);
-    System.out.println(toString(Lake));
-    System.out.println(toString(directions));
 
-    return 1;
+  //  System.out.println(row + " " + col + " " + elevation + " " + num);
+  //  System.out.println(toString(Lake));
+  //  System.out.println(toString(directions));
+
+  //SOLUTION:
+    for (int ind = 0; ind < directions.length; ind++) {
+      int row2 = directions[ind][0];
+      int col2 = directions[ind][1];
+      int depth = directions[ind][2];
+      //calls helper stomp method
+      stomp(Lake,row2,col2,depth);
+    }
+
+    //calculates the depths
+    int ret = 0;
+    for (int r = 0; r < row; r++) {
+      for (int c = 0; c < col; c++) {
+        Lake[r][c] = elevation - Lake[r][c];
+        if (Lake[r][c] < 0) Lake[r][c] = 0;
+        ret = ret + Lake[r][c];
+      }
+    }
+    ret = ret * 72 * 72;
+    System.out.println(ret);
+    return ret;
 }
 
+    //helper stomp method
+    private static void stomp(int[][] Lake, int row, int col, int depth) {
+      //creates a temporary grid
+      int[][] grid = new int[3][3];
+      //finds the maximum val (starting stomp coords)
+      int max = 0;
+      for (int r = 0; r < 3; r++) {
+        for (int c = 0; c < 3; c++) {
+          grid[r][c] = Lake[row+r-1][col+c-1];
+          if (grid[r][c] > max) max = grid[r][c];
+        }
+      }
+      //starting stomp coords will always stomp depth amount of times -> min
+      //for every coord that is bigger than the min, set that to min
+      //then sets the actual Lake coord to the min value
+      int min = max - depth;
+      for (int r = 0; r < 3; r++) {
+        for (int c = 0; c < 3; c++) {
+          if (grid[r][c] > min) grid[r][c] = min;
+          Lake[row+r-1][col+c-1] = grid[r][c];
+        }
+      }
+    }
+
+    //toString method 
     public static String toString(int[][] Lake) {
       String ret = "";
       for (int x = 0; x < Lake.length; x++) {
@@ -81,7 +130,7 @@ public class USACO {
 
 public static void main(String[] args) {
   try {
-      bronze("makelake.4.in");
+      bronze("makelake.3.in");
     }
   catch (FileNotFoundException e) {
 
