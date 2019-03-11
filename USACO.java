@@ -165,7 +165,7 @@ public class USACO {
       //reads in the coordinates
       String lastLine = scan.nextLine();
       String[] numbersArray2 = lastLine.split(" ");
-      //-1 to keep things in bounds 
+      //-1 to keep things in bounds
       int row1 = Integer.parseInt(numbersArray2[0])-1;
       int col1 = Integer.parseInt(numbersArray2[1])-1;
       int row2 = Integer.parseInt(numbersArray2[2])-1;
@@ -207,16 +207,23 @@ public class USACO {
     return newLand;
   }
 
-
+/*
 public static void main(String[] args) {
   try {
-    //  System.out.println(bronze("makelake.1.in"));
-    //  System.out.println(bronze("makelake.2.in"));
-    //  System.out.println(bronze("makelake.3.in"));
+    //    System.out.println(bronze("makelake.1.in"));
+    //    System.out.println(bronze("makelake.2.in"));
+    //    System.out.println(bronze("makelake.3.in"));
+    //    System.out.println(bronze("makelake.4.in"));
+    //    System.out.println(bronze("makelake.5.in"));
+        System.out.println(silver("ctravel.1.in"));
+        System.out.println(silver("ctravel.2.in"));
         System.out.println(silver("ctravel.3.in"));
+        System.out.println(silver("ctravel.4.in"));
+        System.out.println(silver("ctravel.5.in"));
     }
   catch (FileNotFoundException e) {
 
   }
 }
+*/
 }
