@@ -55,7 +55,8 @@ public class USACO {
       index = 0;
       rowNum++;
     }
-
+    System.out.println(row + " " + col + " " + elevation + " " + num);
+    System.out.println(toString(Lake));
     System.out.println(toString(directions));
 
     return 1;
@@ -67,7 +68,10 @@ public class USACO {
         for (int y = 0; y < Lake[0].length; y++) {
           ret = ret + Lake[x][y] + " ";
         }
-        ret = ret + "\n";
+        //adds new line, unless its the last line
+        if (x != Lake.length-1) {
+          ret = ret + "\n";
+        }
       }
       return ret;
     }
@@ -77,7 +81,7 @@ public class USACO {
 
 public static void main(String[] args) {
   try {
-      bronze("makelake.2.in");
+      bronze("makelake.4.in");
     }
   catch (FileNotFoundException e) {
 
