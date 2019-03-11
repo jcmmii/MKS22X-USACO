@@ -45,6 +45,7 @@ public class USACO {
     //creates an array of directions, based on the parameter num and 3
     int[][] directions = new int[num][3];
     int rowNum = 0;
+    //reuse index
     index = 0;
     while (scan.hasNextLine()) {
       String steps = scan.nextLine();
@@ -157,24 +158,53 @@ public class USACO {
         String newLine = scan.nextLine();
         for (int c = 0; c < col; c++) {
           if (newLine.charAt(c) == '.') pasture[r][c] = 0;
-          if (newLine.charAt(c) == '*') pasture[r][c] = 1;
+          if (newLine.charAt(c) == '*') pasture[r][c] = -1;
         }
       }
 
       //reads in the coordinates
       String lastLine = scan.nextLine();
       String[] numbersArray2 = lastLine.split(" ");
-      int row1 = Integer.parseInt(numbersArray2[0]);
-      int col1 = Integer.parseInt(numbersArray2[1]);
-      int row2 = Integer.parseInt(numbersArray2[2]);
-      int col2 = Integer.parseInt(numbersArray2[3]);
+      //-1 to keep things in bounds 
+      int row1 = Integer.parseInt(numbersArray2[0])-1;
+      int col1 = Integer.parseInt(numbersArray2[1])-1;
+      int row2 = Integer.parseInt(numbersArray2[2])-1;
+      int col2 = Integer.parseInt(numbersArray2[3])-1;
 
-      System.out.println(row);
-      System.out.println(col);
-      System.out.println(time);
-      System.out.println(toString(pasture));
-      System.out.println(lastLine);
-      return 1;
+      //sets starting coords, calls helper method
+      pasture[row1][col1] = 1;
+      for (int a = 0; a < time; a++) {
+        pasture = move(pasture);
+      }
+      return pasture[row2][col2];
+  }
+
+  //helper counting moves method
+  private static int[][] move(int[][] land) {
+    //possible moves, creates a new pasture
+    int[][] moves = {{1,-1,0,0}, {0,0,-1,1}};
+    int[][] newLand = new int[land.length][land[0].length];
+    for (int x = 0; x < newLand.length; x++) {
+      for (int y = 0; y < newLand[0].length; y++) {
+        if (land[x][y] != -1) {
+          int sum = 0;
+          for (int z = 0; z < 4; z++) { //checks all four directions
+            int newRow = x + moves[0][z];
+            int newCol = y + moves[1][z];
+            //makes sure that it is in bounds
+            if (newRow >= 0 && newRow < land.length && newCol >= 0 &&
+                newCol < land[0].length && land[newRow][newCol] != -1) {
+              sum = sum + land[newRow][newCol];
+            }
+          }
+          newLand[x][y] = sum;
+        }
+        else{
+          newLand[x][y] = -1;
+        }
+      }
+    }
+    return newLand;
   }
 
 
@@ -183,7 +213,7 @@ public static void main(String[] args) {
     //  System.out.println(bronze("makelake.1.in"));
     //  System.out.println(bronze("makelake.2.in"));
     //  System.out.println(bronze("makelake.3.in"));
-        silver("ctravel.1.in");
+        System.out.println(silver("ctravel.3.in"));
     }
   catch (FileNotFoundException e) {
 
