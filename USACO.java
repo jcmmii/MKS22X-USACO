@@ -31,6 +31,7 @@ public class USACO {
       index++;
     }
 
+    //initializes array of Lake, reads in from file and adds value to array
     int[][] Lake = new int[row][col];
     for (int x = 0; x < Lake.length; x++) {
       String newLine = scan.nextLine();
@@ -40,8 +41,22 @@ public class USACO {
       }
     }
 
-    System.out.println(toString(Lake));
+    int[][] directions = new int[num][3];
+    int rowNum = 0;
+    index = 0;
+    while (scan.hasNextLine()) {
+      String steps = scan.nextLine();
+      String[] parseSteps = steps.split(" ");
+      directions[rowNum][index] = Integer.parseInt(parseSteps[index]);
+      index++;
+      directions[rowNum][index] = Integer.parseInt(parseSteps[index]);
+      index++;
+      directions[rowNum][index] = Integer.parseInt(parseSteps[index]);
+      index = 0;
+      rowNum++;
+    }
 
+    System.out.println(toString(directions));
 
     return 1;
 }
@@ -62,7 +77,7 @@ public class USACO {
 
 public static void main(String[] args) {
   try {
-      bronze("makelake.1.in");
+      bronze("makelake.2.in");
     }
   catch (FileNotFoundException e) {
 
